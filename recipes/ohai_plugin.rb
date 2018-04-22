@@ -30,12 +30,8 @@ ohai 'reload_proftpd' do
   action :nothing
 end
 
-template "#{node['ohai']['plugin_path']}/proftpd.rb" do
-  source "#{source_dir}/proftpd.rb.erb"
-  owner 'root'
-  group 'root'
-  mode '0755'
+ohai_plugin 'proftpd' do
+  resource :template
+  source_file "#{source_dir}/proftpd.rb.erb"
   notifies :reload, 'ohai[reload_proftpd]', :immediately
 end
-
-include_recipe 'ohai::default'
